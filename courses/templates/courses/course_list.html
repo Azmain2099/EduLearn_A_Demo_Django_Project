@@ -1,30 +1,130 @@
 {% extends "courses/base.html" %}
+{% load static %}
 
 {% block title %}Courses{% endblock %}
 
 {% block content %}
-<div class="container mt-4">
-    <h2 class="text-center">Available Courses</h2>
+<style>
+    .hero-section {
+        background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+        padding: 4rem 0;
+        margin-bottom: 3rem;
+        color: white;
+        text-align: center;
+    }
+    
+    .course-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: none;
+        border-radius: 15px;
+        overflow: hidden;
+    }
+    
+    .course-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    
+    .course-thumbnail {
+        height: 200px;
+        object-fit: cover;
+        background-color: #f3f4f6;
+    }
+    
+    .card-body {
+        padding: 1.5rem;
+    }
+    
+    .course-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #1f2937;
+        margin-bottom: 0.5rem;
+    }
+    
+    .course-description {
+        color: #6b7280;
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+        height: 60px;
+        overflow: hidden;
+    }
+    
+    .btn-explore {
+        background: #4f46e5;
+        color: white;
+        border-radius: 8px;
+        padding: 0.5rem 1rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-explore:hover {
+        background: #4338ca;
+        color: white;
+        transform: translateY(-2px);
+    }
+</style>
 
+<div class="hero-section">
+    <div class="container">
+        <h1 class="display-4 mb-3">Welcome to Our Courses</h1>
+        <p class="lead mb-4">Start your learning journey with our curated collection of courses</p>
+        <a href="{% url 'course_create' %}" class="btn btn-light btn-lg">
+            <i class="fas fa-plus me-2"></i>Create New Course
+        </a>
+    </div>
+</div>
+
+<div class="container">
     <!-- Success Messages -->
     {% if messages %}
         {% for message in messages %}
-            <div class="alert alert-success">{{ message }}</div>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
         {% endfor %}
     {% endif %}
 
-    <!-- Button to Create a New Course -->
-    <a href="{% url 'course_create' %}" class="btn btn-success mb-3">Add a New Course</a>
-
-    <!-- Course List -->
-    <ul class="list-group">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         {% for course in courses %}
-            <li class="list-group-item">
-                <a href="{% url 'course_detail' course.pk %}">{{ course.title }}</a>
-            </li>
+        <div class="col">
+            <div class="course-card card h-100">
+                {% if course.thumbnail %}
+                <img src="{{ course.thumbnail.url }}" class="course-thumbnail card-img-top" alt="{{ course.title }}">
+                {% else %}
+                <div class="course-thumbnail card-img-top d-flex align-items-center justify-content-center">
+                    <i class="fas fa-book-open fa-3x text-secondary"></i>
+                </div>
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="course-title">{{ course.title }}</h5>
+                    <p class="course-description">
+                        {{ course.description|truncatechars:100 }}
+                    </p>
+                    <a href="{% url 'course_detail' course.pk %}" class="btn btn-explore">
+                        Explore Course <i class="fas fa-arrow-right ms-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
         {% empty %}
-            <li class="list-group-item text-center">No courses available.</li>
+        <div class="col-12 text-center py-5">
+            <div class="empty-state">
+                <i class="fas fa-graduation-cap fa-4x text-muted mb-3"></i>
+                <h3 class="text-muted">No courses available yet</h3>
+                <p class="text-muted">Be the first to create a course!</p>
+                <a href="{% url 'course_create' %}" class="btn btn-primary mt-3">
+                    <i class="fas fa-plus me-2"></i>Create Course
+                </a>
+            </div>
+        </div>
         {% endfor %}
-    </ul>
+    </div>
 </div>
+
+<!-- Add Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
 {% endblock %}

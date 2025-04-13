@@ -1,18 +1,28 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Add Course</title>
-</head>
-<body>
-    <h1>Add a New Course</h1>
+{% extends "courses/base.html" %}
 
+{% block title %}Add Course{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Add New Course</h2>
+    
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form.as_p }}
+        
+        <div class="card shadow-sm">
+            <div class="card-body">
+                {{ form.as_p }}
+            </div>
+        </div>
 
-        <button type="submit">Save</button>
+        <div class="mt-4 text-center">
+            <button type="submit" class="btn btn-success">
+                <i class="fas fa-save me-2"></i>Save Course
+            </button>
+            <a href="{% url 'course_list' %}" class="btn btn-outline-secondary">
+                <i class="fas fa-times me-2"></i>Cancel
+            </a>
+        </div>
     </form>
-
-    <a href="{% url 'course_list' %}">Back to Courses</a>
-</body>
-</html>
+</div>
+{% endblock %}
