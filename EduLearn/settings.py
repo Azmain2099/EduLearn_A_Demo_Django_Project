@@ -16,7 +16,7 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-CSRF_TRUSTED_ORIGINS= ["web-production-96794.up.railway.app"]
+CSRF_TRUSTED_ORIGINS = ["https://web-production-96794.up.railway.app"]
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -138,4 +139,7 @@ EMAIL_USE_TLS = True  # Set to False for SMTP without TLS
 EMAIL_HOST_USER = 'your-email@example.com'  # Your email user
 EMAIL_HOST_PASSWORD = 'your-email-password'  # Your email password
 DEFAULT_FROM_EMAIL = 'noreply@edulearn.com'  # Default sender email
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 
