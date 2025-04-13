@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}Update Lesson{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="my-4">Update Lesson</h1>
+    
+    <form method="POST">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="id_title">Lesson Title</label>
+            {{ form.title }}
+        </div>
+
+        <div class="form-group">
+            <label for="id_description">Lesson Description</label>
+            {{ form.description }}
+        </div>
+
+        <div class="form-group">
+            <label for="id_date">Lesson Date</label>
+            {{ form.date }}
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Update Lesson</button>
+        </div>
+    </form>
+
+    <a href="{% url 'course_list' %}" class="btn btn-secondary mt-3">Back to Courses</a>
+</div>
+{% endblock %}

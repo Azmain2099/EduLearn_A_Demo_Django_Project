@@ -1,0 +1,7 @@
+{% extends "courses/base.html" %}
+{% block content %}
+    <div class="alert alert-warning">
+        <h2>Duplicate Email</h2>
+        <p>{{ student.name }} exists,try again {{ course.name }}.</p>
+    </div>
+{% endblock %}

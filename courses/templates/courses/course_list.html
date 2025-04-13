@@ -1,0 +1,30 @@
+{% extends "courses/base.html" %}
+
+{% block title %}Courses{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-center">Available Courses</h2>
+
+    <!-- Success Messages -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <!-- Button to Create a New Course -->
+    <a href="{% url 'course_create' %}" class="btn btn-success mb-3">Add a New Course</a>
+
+    <!-- Course List -->
+    <ul class="list-group">
+        {% for course in courses %}
+            <li class="list-group-item">
+                <a href="{% url 'course_detail' course.pk %}">{{ course.title }}</a>
+            </li>
+        {% empty %}
+            <li class="list-group-item text-center">No courses available.</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
